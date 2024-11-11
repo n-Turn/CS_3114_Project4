@@ -1,0 +1,172 @@
+>> Note:
+>>     This sample I/O is meant to demonstrate the syntax for all input commands and to answer all questions about the syntax of the output.
+>>     It does not meaningfully exercise the logic of the hash table or the memory manager.
+
+>> Call the program as:
+>>     java SemManager 512 4 P1Sample_inputX.txt
+
+> insert 1
+> Overview of HCI Research at VT
+> 0610051600 90 10 10 45
+> HCI Computer_Science VT Virginia_Tech
+> This seminar will present an overview of HCI research at VT
+Successfully inserted record with ID 1
+ID: 1, Title: Overview of HCI Research at VT
+Date: 0610051600, Length: 90, X: 10, Y: 10, Cost: 45
+Description: This seminar will present an overview of HCI research at VT
+Keywords: HCI, Computer_Science, VT, Virginia_Tech
+Size: 173
+
+>> Explanation:
+>>     This insert uses the first 173 bytes in the memory array
+
+> insert 2
+> Computational Biology and Bioinformatics in CS at Virginia Tech
+>       0610071600       60     20     10 30
+> Bioinformatics computation_biology Biology Computer_Science VT Virginia_Tech
+>     Introduction to   bioinformatics and computation biology
+Successfully inserted record with ID 2
+ID: 2, Title: Computational Biology and Bioinformatics in CS at Virginia Tech
+Date: 0610071600, Length: 60, X: 20, Y: 10, Cost: 30
+Description: Introduction to bioinformatics and computation biology
+Keywords: Bioinformatics, computation_biology, Biology, Computer_Science, VT, Virginia_Tech
+Size: 242
+
+>> Explanation:
+>>     This insert uses the next available block of 242 bytes in the memory array
+
+> insert 3
+> Computing Systems Research at VT
+> 0701250830  30 30   10  17
+> high_performance_computing           grids     VT computer science
+>  Seminar about the      Computing systems research at      VT
+Memory pool expanded to 1024 bytes
+Hash table expanded to 8 records
+Successfully inserted record with ID 3
+ID: 3, Title: Computing Systems Research at VT
+Date: 0701250830, Length: 30, X: 30, Y: 10, Cost: 17
+Description: Seminar about the Computing systems research at VT
+Keywords: high_performance_computing, grids, VT, computer, science
+Size: 182
+
+>> Explanation:
+>>     Note that we had to increase the memory pool size to fit a third record
+>>     The size is incremented by the initial value (512)
+>>     Also note that we had two records in the hash table and a third record makes it more than half full
+>>     So we double the size of the hash table
+
+> insert 3
+> Overview of HPC and CSE Research at VT
+> 0703301125     35        0  0                                           25
+>       HPC      CSE      computer_science 
+> Learn what kind of    research is done on HPC  and CSE at VT
+Insert FAILED - There is already a record with ID 3
+
+>> Explanation:
+>>     Duplicate ID, so it fails - nothing changes
+
+Successfully inserted record with ID 10
+ID: 10, Title: Overview of HPC and CSE Research at VT
+Date: 0703301125, Length: 35, X: 0, Y: 0, Cost: 25
+Description: Learn what kind of research is done on HPC and CSE at VT
+Keywords: HPC, CSE, computer_science
+Size: 164
+
+>> Explanation:
+>>     This record fits in the space we have allocated
+
+> search 3
+Found record with ID 3:
+ID: 3, Title: Computing Systems Research at VT
+Date: 0701250830, Length: 30, X: 30, Y: 10, Cost: 17
+Description: Seminar about the Computing systems research at VT
+Keywords: high_performance_computing, grids, VT, computer, science
+
+> print hashtable
+Hashtable:
+1: 1
+2: 2
+3: 3
+5: 10
+total records: 4
+
+>> Explanation:
+>>     Originally the hash table had four slots and records 1 and 2 went into their respective slots
+>>     The third record would overfill the table, so it doubled and record 3 went into slot 3
+>>     Record 10 hashes to slot (10 mod 8) = 2, which is full so we quadratic probe
+>>     2 + ((1*1+1)/2) mod 8 = 3, which is also full
+>>     2 + ((2*2+2)/2) mod 8 = 5, which is free, so we hash to slot 5
+
+Freeblock List:
+(761,263)
+
+>> Explanation:
+>>     We currently hold 4 records taking up 761 bytes so we have one free block with the remainder left
+
+> delete    2
+Record with ID 2 successfully deleted from the database
+
+> search 2
+Search FAILED -- There is no record with ID 2
+
+>> Explanation:
+>>     We just deleted it
+
+> print hashtable
+Hashtable:
+1: 1
+2: TOMBSTONE
+3: 3
+5: 10
+total records: 3
+
+>> Explanation:
+>>     Note that deleting 2 requires a tombstone, otherwise we would lose access to record 10
+
+> print blocks
+Freeblock List:
+(173,242) -> (761,263)
+
+>> Explanation:
+>>     When we deleted 2, we freed a block that gets added to our freeblock list
+
+> delete 6
+Delete FAILED -- There is no record with ID 6
+
+> insert 2
+> Much More Computational Biology and Bioinformatics in CS at Virginia Tech
+>       0610071600       60     20     10 30
+> Bioinformatics computation_biology Biology Computer_Science VT Virginia_Tech
+>     Introduction to bioinformatics and lots of computation biology
+Successfully inserted record with ID 2
+ID: 2, Title: Much More Computational Biology and Bioinformatics in CS at Virginia Tech
+Date: 0610071600, Length: 60, X: 20, Y: 10, Cost: 30
+Description: Introduction to bioinformatics and lots of computation biology
+Keywords: Bioinformatics, computation_biology, Biology, Computer_Science, VT, Virginia_Tech
+Size: 260
+
+>> Explanation:
+>>     This record fits, so we add this to the table and since it hashes to 2, we replace the TOMBSTONE value
+
+>   delete 10
+Record with ID 10 successfully deleted from the database
+
+> print hashtable   
+Hashtable:
+1: 1
+2: 2
+3: 3
+5: TOMBSTONE
+total records: 3
+
+>   print blocks
+Freeblock List:
+(173,242) -> (597,164) -> (1021,3)
+
+>> Explanation:
+>>     We can see our final freeblock list has three different blocks
+>>     For example, if we were able to insert records that filled up the entire list
+>>     We should see something like:
+>>     >   print blocks
+>>     Freeblock List:
+>>     There are no freeblocks in the memory pool
