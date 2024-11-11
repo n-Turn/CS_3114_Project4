@@ -4,8 +4,8 @@ import student.TestCase;
 /**
  *  Test the Seminar class
  *
- * @author {Your Name Here}
- * @version {Put Something Here}
+ * @author Nicolas Turner & Nimay Goradia
+ * @version 11/11/24
  */
 public class SeminarTest extends TestCase {
     /**
