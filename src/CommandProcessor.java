@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Processes commands for the Seminar Manager system
  * Handles insert, delete, search, and print operations
  * 
- * @author {Your Name Here}
+ * @author Nicolas Turner and Nimay Goradia
  * @version {Put Something Here}
  */
 public class CommandProcessor {
