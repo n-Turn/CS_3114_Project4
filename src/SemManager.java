@@ -1,6 +1,7 @@
 
 /**
- * MORE TEST CHANGES
+ * Test changes for the SemManger class
+ * Please work
  * 
  */
 
