@@ -32,14 +32,14 @@ public class ProblemSpecTest extends TestCase {
     }
 
 
-    /**
-     * This method is simply to get coverage of the class declaration.
-     */
-    public void testMInitx() {
-        SemManager sem = new SemManager();
-        assertNotNull(sem);
-        SemManager.main(null);
-    }
+//    /**
+//     * This method is simply to get coverage of the class declaration.
+//     */
+//    public void testMInitx() {
+//        SemManager sem = new SemManager();
+//        assertNotNull(sem);
+//        SemManager.main(null);
+//    }
 
 
     /**

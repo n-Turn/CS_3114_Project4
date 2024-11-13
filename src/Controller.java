@@ -23,7 +23,7 @@ public class Controller {
     /**
      * Getter method for the hash table
      * 
-     * @return the number of songs
+     * @return the hash table is returned
      */
     public HashTable getHashTable() {
         return ht;
@@ -35,38 +35,43 @@ public class Controller {
      * 
      * @param id
      *            The id to be inserted.
-     * @param songName
-     *            The name of the song to be inserted.
      */
-    public boolean insertID(int id) {
-        if (ht.search(id) == -1) {
-            ht.insert(id);
-            // Insert the id if not found
-            return true;
-        }
-        return false;
-        // System.out.println("|" + ID + "| already exists in the
-        // Artist database.");
+    public void insertID(int id, Handle handle) {
+        // insert id if not found
+        ht.insert(id, handle);
+        // System.out.println("|" + id + "| already exists in the database.");
     }
 
 
     /**
-     * Remove an artist and song into the respective databases.
+     * Remove an id from the database.
      * 
      * @param id
      *            The id to be removed.
      */
-
     public boolean deleteID(int id) {
-        if (ht.search(id) != -1) { // If artist exists
+        if (ht.search(id) != -1) {
+            // If artist exists
             ht.delete(id);
             return true;
-            // System.out.println("|" + artistName + "| has been removed
+            // System.out.println("|" + id + "| has been removed
             // from the database.");
         }
         return false;
         // System.out.println("|" + id + "| does not exist in the database.");
     }
+
+
+    /**
+     * Searches for an id in the database.
+     * 
+     * @param id
+     *            The id to be searched for.
+     */
+    public boolean searchID(int id) {
+        return ht.search(id) != -1;
+    }
+
 
     /**
      * 
@@ -78,8 +83,7 @@ public class Controller {
      *            The hash table to be printed either songs or artists
      * 
      */
-    // public void print(Hash hashTable)
-    // {
-    // hashTable.print();
-    // }
+    public void print() {
+        ht.print();
+    }
 }

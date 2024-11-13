@@ -5,6 +5,10 @@
  * 
  */
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * The class containing the main method.
  *
@@ -34,10 +38,23 @@
 
 public class SemManager {
     /**
+     * Runs the project according to the arguments
+     * 
      * @param args
      *     Command line parameters
+     * @throws FileNotFoundException if the file is not found
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // This is the main file for the program.
+        
+        int memSize = Integer.parseInt(args[0]);
+        int hashSize = Integer.parseInt(args[1]);
+        File inputFile = new File(args[2]);
+        
+        Scanner input = new Scanner(inputFile);
+        
+        CommandProcessor cp = new CommandProcessor(memSize, hashSize, input);
+        cp.processCommands();
+        
     }
 }

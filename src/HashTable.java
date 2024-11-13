@@ -149,7 +149,7 @@ public class HashTable {
      * @param rec
      *            the record to be inserted into the hash
      */
-    public boolean insert(int id) {
+    public void insert(int id, Handle handle) {
         if (checkResize()) {
             increaseSize();
             System.out.println("Hash table expanded to " + allRecords.length
@@ -159,25 +159,23 @@ public class HashTable {
 
         int i = 0;
         while (allRecords[index] != null) {
-            if (allRecords[index].key == id) {
-                return false; // Record is already present
-            }
+// if (allRecords[index].key == id) {
+// return false; // Record is already present
+// }
             if (allRecords[index] == tombstone) {
                 break; // Insert at tombstone position
             }
-
             i++;
             // Quadratic probing to find the next available index
             index = (HashTable.h(id, allRecords.length) + ((i * i) + i) / 2)
                 % allRecords.length;
 
             if (i == allRecords.length) {
-                return false; // Prevent infinite loop if table is full
+                return; // Prevent infinite loop if table is full
             }
         }
-        allRecords[index] = new Record(id, new Handle(0, 0));
+        allRecords[index] = new Record(id, handle);
         numberOfRecords++;
-        return true;
     }
 
 
