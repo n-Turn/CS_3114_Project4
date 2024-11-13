@@ -314,8 +314,15 @@ public class HashTable {
         int i = 0;
         while ((i < allRecords.length)) {
             if (allRecords[i] != null) {
-                System.out.println(i + ": " + allRecords[i].key);
+                if (allRecords[i].key == -1) {
+                    System.out.println(i + ": TOMBSTONE");
+
+                }
+                else {
+                    System.out.println(i + ": " + allRecords[i].key);
+                }
             }
+            i++;
         }
         System.out.println("total records: " + numberOfRecords);
     }

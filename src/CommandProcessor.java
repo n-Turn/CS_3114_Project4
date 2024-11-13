@@ -177,17 +177,25 @@ public class CommandProcessor {
      *            Scanner containing command parameters
      */
     private void processSearch(Scanner cmdScanner) {
-        try {
-            int id = cmdScanner.nextInt();
-            // Handle handle = hashTable.search(id);
+        int id = cmdScanner.nextInt();
+        // Handle handle = hashTable.search(id);
 
-            int index = hashTable.search(id);
+        int index = hashTable.search(id);
 
-            // if (index == -1) {
-            System.out.println("Search FAILED -- There is no record with ID "
-                + id);
-            return;
-            // }
+        // if (index == -1) {
+        System.out.println("Search FAILED -- There is no record with ID " + id);
+        //return;
+// try {
+// int id = cmdScanner.nextInt();
+// // Handle handle = hashTable.search(id);
+//
+// int index = hashTable.search(id);
+//
+// // if (index == -1) {
+// System.out.println("Search FAILED -- There is no record with ID "
+// + id);
+// return;
+// }
 // Handle handle = hashTable.getRecords()[index].getHandle();
 //
 //
@@ -204,11 +212,13 @@ public class CommandProcessor {
 // }
 // catch (Exception e) {
 // System.out.println("Error deserializing seminar data");
+//
+// }catch(
+//
+// Exception e)
+// {
+// System.out.println("Error processing search command");
 // }
-        }
-        catch (Exception e) {
-            System.out.println("Error processing search command");
-        }
     }
 
 
