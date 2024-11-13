@@ -116,9 +116,9 @@ public class CommandProcessor {
             // Create and serialize the seminar
             Seminar sem = new Seminar(id, title, dateTime, length, x, y, cost,
                 keywords, description);
-
+            
             // Check if ID already exists
-            if (hashTable.search(id) != null) {
+            if (hashTable.search(id) != -1) {
                 writer.println(
                     "Insert FAILED - There is already a record with ID " + id);
                 return;
@@ -155,15 +155,17 @@ public class CommandProcessor {
      */
     private void processDelete(Scanner cmdScanner) {
         int id = cmdScanner.nextInt();
-        Handle handle = hashTable.search(id);
+        //Handle handle = hashTable.search(id);
+        int index = hashTable.search(id);
+        Boolean recordExists = hashTable.delete(id);
 
-        if (handle == null) {
+        if (!recordExists) {
             writer.println("Delete FAILED -- There is no record with ID " + id);
             return;
         }
-
+        // Only does this if the record was deleted from the hash
         // Remove from both hash table and memory manager
-        hashTable.delete(id);
+        Handle handle = hashTable.getRecords()[index].getHandle();
         memManager.remove(handle);
         writer.println("Record with ID " + id
             + " successfully deleted from the database");
@@ -178,14 +180,18 @@ public class CommandProcessor {
      */
     private void processSearch(Scanner cmdScanner) {
         try {
-            int id = cmdScanner.nextInt();
-            Handle handle = hashTable.search(id);
+            int id = cmdScanner.nextInt();   
+            //Handle handle = hashTable.search(id);
+            
+            int index = hashTable.search(id);
 
-            if (handle == null) {
+            if (index == -1) {
                 writer.println("Search FAILED -- There is no record with ID "
                     + id);
                 return;
             }
+            Handle handle = hashTable.getRecords()[index].getHandle();
+
 
             // Get the record from memory manager
             byte[] space = new byte[handle.getLength()];
