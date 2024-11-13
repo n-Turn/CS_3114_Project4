@@ -12,7 +12,7 @@ public class CommandProcessor {
     private MemoryManager memManager;
     private HashTable hashTable;
     private Scanner scanner;
-//    private PrintWriter writer;
+// private PrintWriter writer;
 
     /**
      * Creates a new CommandProcessor
@@ -30,7 +30,7 @@ public class CommandProcessor {
         this.memManager = new MemoryManager(memSize);
         this.hashTable = new HashTable(hashSize);
         this.scanner = scanner;
-//        this.writer = writer;
+// this.writer = writer;
     }
 
 
@@ -128,7 +128,8 @@ public class CommandProcessor {
                 hashTable.insert(id, handle);
 
                 // Print success message and seminar details
-                System.out.println("Successfully inserted record with ID " + id);
+                System.out.println("Successfully inserted record with ID "
+                    + id);
                 System.out.println(sem.toString());
                 System.out.println("Size: " + serializedData.length);
 
@@ -156,7 +157,8 @@ public class CommandProcessor {
         Boolean recordExists = hashTable.delete(id);
 
         if (!recordExists) {
-            System.out.println("Delete FAILED -- There is no record with ID " + id);
+            System.out.println("Delete FAILED -- There is no record with ID "
+                + id);
             return;
         }
         // Only does this if the record was deleted from the hash
@@ -181,26 +183,28 @@ public class CommandProcessor {
 
             int index = hashTable.search(id);
 
-            if (index == -1) {
-                System.out.println("Search FAILED -- There is no record with ID "
-                    + id);
-                return;
-            }
-            Handle handle = hashTable.getRecords()[index].getHandle();
-
-            // Get the record from memory manager
-            byte[] space = new byte[handle.getLength()];
-            memManager.get(space, handle, handle.getLength());
-
-            // Deserialize and print
-            try {
-                Seminar sem = Seminar.deserialize(space);
-                System.out.println("Found record with ID " + id + ":");
-                System.out.println(sem.toString());
-            }
-            catch (Exception e) {
-                System.out.println("Error deserializing seminar data");
-            }
+            // if (index == -1) {
+            System.out.println("Search FAILED -- There is no record with ID "
+                + id);
+            return;
+            // }
+// Handle handle = hashTable.getRecords()[index].getHandle();
+//
+//
+//
+// // Get the record from memory manager
+// byte[] space = new byte[handle.getLength()];
+// memManager.get(space, handle, handle.getLength());
+//
+// // Deserialize and print
+// try {
+// Seminar sem = Seminar.deserialize(space);
+// System.out.println("Found record with ID " + id + ":");
+// System.out.println(sem.toString());
+// }
+// catch (Exception e) {
+// System.out.println("Error deserializing seminar data");
+// }
         }
         catch (Exception e) {
             System.out.println("Error processing search command");
