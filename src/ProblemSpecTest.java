@@ -31,33 +31,49 @@ public class ProblemSpecTest extends TestCase {
         return new String(encoded);
     }
 
-
-//    /**
-//     * This method is simply to get coverage of the class declaration.
-//     */
-//    public void testMInitx() {
-//        SemManager sem = new SemManager();
-//        assertNotNull(sem);
-//        SemManager.main(null);
-//    }
-
-
+// /**
+// * This method is simply to get coverage of the class declaration.
+// */
+// public void testMInitx() {
+// SemManager sem = new SemManager();
+// assertNotNull(sem);
+// SemManager.main(null);
+// }
+    
     /**
      * Full parser test
      * 
      * @throws IOException
      */
-    public void testparserfull() throws IOException {
+    public void testparsermilestone1() throws IOException {
         String[] args = new String[3];
         args[0] = "512";
         args[1] = "4";
-        args[2] = "P4Sample_input.txt";
+        args[2] = "Milestone1_input.txt";
 
         SemManager.main(args);
         String output = systemOut().getHistory();
-        String referenceOutput = readFile("P4Sample_output.txt");
-// assertFuzzyEquals(referenceOutput, output);
+        String referenceOutput = readFile("Milestone1_output.txt");
+        assertFuzzyEquals(referenceOutput, output);
     }
+
+
+//    /**
+//     * Full parser test
+//     * 
+//     * @throws IOException
+//     */
+//    public void testparserfull() throws IOException {
+//        String[] args = new String[3];
+//        args[0] = "512";
+//        args[1] = "4";
+//        args[2] = "P4Sample_input.txt";
+//
+//        SemManager.main(args);
+//        String output = systemOut().getHistory();
+//        String referenceOutput = readFile("P4Sample_output.txt");
+//        assertFuzzyEquals(referenceOutput, output);
+//    }
 
 
     /**

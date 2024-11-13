@@ -35,6 +35,8 @@ public class Controller {
      * 
      * @param id
      *            The id to be inserted.
+     * @param handle
+     *            The handle to be inserted.
      */
     public void insertID(int id, Handle handle) {
         // insert id if not found
@@ -48,6 +50,7 @@ public class Controller {
      * 
      * @param id
      *            The id to be removed.
+     * @return true if something was deleted and false if not
      */
     public boolean deleteID(int id) {
         if (ht.search(id) != -1) {
@@ -67,6 +70,7 @@ public class Controller {
      * 
      * @param id
      *            The id to be searched for.
+     * @return true if found and false if not
      */
     public boolean searchID(int id) {
         return ht.search(id) != -1;
@@ -74,14 +78,7 @@ public class Controller {
 
 
     /**
-     * 
      * Prints the artists and songs into the output file with their index.
-     *
-     * 
-     * 
-     * @param hashTable
-     *            The hash table to be printed either songs or artists
-     * 
      */
     public void print() {
         ht.print();

@@ -113,7 +113,7 @@ public class HashTable {
      *
      * @return the tombstone record
      */
-    public Record getTOMBSTONE() {
+    public Record getTombstone() {
         return tombstone;
     }
 
@@ -131,9 +131,9 @@ public class HashTable {
     /**
      * Compute the hash function
      *
-     * @param s
-     *            The string that we are hashing
-     * @param length
+     * @param id
+     *            The id that we are hashing
+     * @param tableSize
      *            Length of the hash table (needed because this method is
      *            static)
      * @return The hash function value (the home slot in the table for this key)
@@ -146,8 +146,10 @@ public class HashTable {
     /**
      * Insert method for the hash table
      *
-     * @param rec
-     *            the record to be inserted into the hash
+     * @param id
+     *            the id to be inserted into the hash table
+     * @param handle
+     *            the handle to be inserted into the hash table
      */
     public void insert(int id, Handle handle) {
         if (checkResize()) {
@@ -230,8 +232,9 @@ public class HashTable {
     /**
      * Removes a record from the hash table
      *
-     * @param rec
-     *            the record to be removed from the hash table
+     * @param id
+     *            the id to be removed from the hash table
+     * @return true if something was deleted and false if not
      */
     public boolean delete(int id) {
         if (numberOfRecords == 0) {
@@ -287,8 +290,8 @@ public class HashTable {
     /**
      * Finds the index of a specified name
      *
-     * @param name
-     *            the name of the record to be found
+     * @param id
+     *            the id of the record to be found
      * @return the index of the specified record, or -1 if not found
      */
     public int search(int id) {

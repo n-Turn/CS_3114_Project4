@@ -5,8 +5,8 @@ import java.util.Scanner;
  * Processes commands for the Seminar Manager system
  * Handles insert, delete, search, and print operations
  * 
- * @author Nicolas Turner and Nimay Goradia
- * @version {Put Something Here}
+ * @author Nimay Goradia (ngoradia) and Nicolas Turner (nicturn)
+ * @version 11.13/2024
  */
 public class CommandProcessor {
     private MemoryManager memManager;
@@ -23,8 +23,6 @@ public class CommandProcessor {
      *            Initial hash table size
      * @param scanner
      *            Input scanner
-     * @param writer
-     *            Output writer
      */
     public CommandProcessor(int memSize, int hashSize, Scanner scanner) {
         this.memManager = new MemoryManager(memSize);
@@ -39,7 +37,7 @@ public class CommandProcessor {
      */
     public void processCommands() {
         while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
+            String line = scanner.nextLine().trim().replaceAll("\\s+", " ");
             if (!line.isEmpty()) {
                 processCommand(line);
             }
@@ -55,7 +53,7 @@ public class CommandProcessor {
      */
     private void processCommand(String line) {
         Scanner cmdScanner = new Scanner(line);
-        String cmd = cmdScanner.next().trim();
+        String cmd = cmdScanner.next().trim().replaceAll("\\s+", " ");
 
         switch (cmd) {
             case "insert":
@@ -90,10 +88,10 @@ public class CommandProcessor {
             int id = cmdScanner.nextInt();
 
             // Read the next 4 lines for seminar data
-            String title = scanner.nextLine().trim();
+            String title = scanner.nextLine().trim().replaceAll("\\s+", " ");
 
             // Get date/time, length, x, y, cost from third line
-            String line = scanner.nextLine().trim();
+            String line = scanner.nextLine().trim().replaceAll("\\s+", " ");
             Scanner dataScanner = new Scanner(line);
             String dateTime = dataScanner.next();
             int length = dataScanner.nextInt();
@@ -103,11 +101,13 @@ public class CommandProcessor {
             dataScanner.close();
 
             // Get keywords
-            String keywordsLine = scanner.nextLine().trim();
+            String keywordsLine = scanner.nextLine().trim().replaceAll("\\s+",
+                " ");
             String[] keywords = keywordsLine.split("\\s+");
 
             // Get description
-            String description = scanner.nextLine().trim();
+            String description = scanner.nextLine().trim().replaceAll("\\s+",
+                " ");
 
             // Create and serialize the seminar
             Seminar sem = new Seminar(id, title, dateTime, length, x, y, cost,
@@ -184,7 +184,7 @@ public class CommandProcessor {
 
         // if (index == -1) {
         System.out.println("Search FAILED -- There is no record with ID " + id);
-        //return;
+        // return;
 // try {
 // int id = cmdScanner.nextInt();
 // // Handle handle = hashTable.search(id);
@@ -229,7 +229,7 @@ public class CommandProcessor {
      *            Scanner containing command parameters
      */
     private void processPrint(Scanner cmdScanner) {
-        String type = cmdScanner.next().trim();
+        String type = cmdScanner.next().trim().replaceAll("\\s+", " ");
 
         if (type.equals("hashtable")) {
             hashTable.print();
