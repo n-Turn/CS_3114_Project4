@@ -1,0 +1,27 @@
+insert 1
+Overview of HCI Research at VT
+0610051600 90 10 10 45
+HCI Computer_Science VT Virginia_Tech
+This seminar will present an overview of HCI research at VT
+
+insert 2
+Computing Systems Research at VT
+0701250830 30 30 10 17
+high_performance_computing grids VT computer_science
+Seminar about Computing systems research at VT
+
+search 1
+
+insert 3
+Database Systems at VT
+0701250830 45 20 15 20
+databases systems VT
+Overview of database systems research
+
+print hashtable
+
+delete 2
+
+search 2
+
+print hashtable

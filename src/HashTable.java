@@ -161,9 +161,6 @@ public class HashTable {
 
         int i = 0;
         while (allRecords[index] != null) {
-// if (allRecords[index].key == id) {
-// return false; // Record is already present
-// }
             if (allRecords[index] == tombstone) {
                 break; // Insert at tombstone position
             }
@@ -250,19 +247,6 @@ public class HashTable {
         return false;
     }
 
-// /**
-// * Getter method for the key of an artist/song with a specific name
-// *
-// * @param name
-// * the name of the artist/song
-// * @return the key/value number of the record if found, otherwise -1
-// */
-// public int getRecordKey(int id) {
-// if (find(id) == -1) {
-// return -1;
-// }
-// return allRecords[find(id)].getKey();
-// }
 
 // /**
 // * Finds the index of a specified record
