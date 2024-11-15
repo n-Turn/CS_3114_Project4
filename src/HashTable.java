@@ -169,9 +169,9 @@ public class HashTable {
             index = (HashTable.h(id, allRecords.length) + ((i * i) + i) / 2)
                 % allRecords.length;
 
-            if (i == allRecords.length) {
-                return; // Prevent infinite loop if table is full
-            }
+//            if (i == allRecords.length) {
+//                return; // Prevent infinite loop if table is full
+//            }
         }
         allRecords[index] = new Record(id, handle);
         numberOfRecords++;
@@ -213,9 +213,9 @@ public class HashTable {
                         doubledLength) + (whileLoopCounter * whileLoopCounter))
                         % doubledLength;
 
-                    if (whileLoopCounter == doubledLength) {
-                        return; // Prevent infinite loop if table is full
-                    }
+//                    if (whileLoopCounter == doubledLength) {
+//                        return; // Prevent infinite loop if table is full
+//                    }
                 }
                 doubledRecords[newIndex] = allRecords[i];
             }
