@@ -123,15 +123,15 @@ public class DoubleLL {
     }
 
 
-    /**
-     * This method clears the list by setting head and tail to null and
-     * resetting the size.
-     */
-    public void clear() {
-        head = null;
-        tail = null;
-        size = 0;
-    }
+//    /**
+//     * This method clears the list by setting head and tail to null and
+//     * resetting the size.
+//     */
+//    public void clear() {
+//        head = null;
+//        tail = null;
+//        size = 0;
+//    }
 
 // /**
 // *
@@ -294,25 +294,24 @@ public class DoubleLL {
     }
 
 
-    /**
-     * This method returns a string representation of the list in the format
-     * 
-     * @return a string representation of the list
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        Node current = head;
-        sb.append("[");
-        while (current != null) {
-            sb.append(current.getBlock().toString());
-            if (current.next() != null) {
-                sb.append(", ");
-            }
-            current = current.next();
-        }
-        sb.append("]");
-        return sb.toString();
-    }
-
+//    /**
+//     * This method returns a string representation of the list in the format
+//     * 
+//     * @return a string representation of the list
+//     */
+//    @Override
+//    public String toString() {
+//        StringBuilder sb = new StringBuilder();
+//        Node current = head;
+//        sb.append("[");
+//        while (current != null) {
+//            sb.append(current.getBlock().toString());
+//            if (current.next() != null) {
+//                sb.append(", ");
+//            }
+//            current = current.next();
+//        }
+//        sb.append("]");
+//        return sb.toString();
+//    }
 }

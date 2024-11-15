@@ -45,7 +45,6 @@ public class Block {
 
     /**
      * Sets a new position for this handle
-     * Used when memory is compacted
      * 
      * @param newPos
      *            New memory position
@@ -56,23 +55,12 @@ public class Block {
 
 
     /**
-     * Sets a new position for this handle
-     * Used when memory is compacted
+     * Sets a new length for this handle
      * 
      * @param newLen
      *            New memory position
      */
     public void setLength(int newLen) {
-        this.position = newLen;
-    }
-    
-    /**
-     * This method returns a string representation of the list in the format
-     * 
-     * @return a string representation of the list
-     */
-    @Override
-    public String toString() {
-        return "Block[position=" + position + ", length=" + length + "]";
+        this.length = newLen;
     }
 }

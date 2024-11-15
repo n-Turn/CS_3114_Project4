@@ -39,21 +39,26 @@ public class MemoryManager {
         for (int listIndex = 0; listIndex < freeBlockList.size(); listIndex++) {
             Block currentFreeBlock = freeBlockList.get(listIndex);
             if (currentFreeBlock.getLength() >= size) {
+                int position = currentFreeBlock.getPosition();
                 if (currentFreeBlock.getLength() == size) {
                     freeBlockList.remove(listIndex);
                 }
                 else {
-                    currentFreeBlock.setPosition(listIndex + size);
+// System.out.println(listIndex);
+// System.out.println(size);
+                    currentFreeBlock.setPosition(currentFreeBlock.getPosition()
+                        + size);
                     currentFreeBlock.setLength(currentFreeBlock.getLength()
                         - size);
                 }
-                int position = currentFreeBlock.getPosition();
                 System.arraycopy(serializedData, 0, memoryPool, position, size);
                 return new Handle(position, size);
             }
         }
         // If no suitable block found, expand memory and retry insertion
         expand();
+        System.out.println("Memory pool expanded to " + memoryPool.length
+            + " bytes");
         return insert(serializedData, size);
     }
 
@@ -91,6 +96,7 @@ public class MemoryManager {
      *            is the handle that is removed
      */
     public void remove(Handle handle) {
+        // System.out.println(handle.toString());
         int startPosition = handle.getPosition();
 
         // new block of free memory
@@ -174,14 +180,19 @@ public class MemoryManager {
      * Dumps a printout of the freeblock list
      */
     public void dump() {
-        System.out.println("Free Block List:");
-        for (int i = 0; i < freeBlockList.size(); i++) {
-            Block block = freeBlockList.get(i);
-            System.out.print("(" + block.getPosition() + "," + block.getLength()
-                + ")");
-            if (i != freeBlockList.size() - 1) {
-                System.out.print(" -> ");
+        if (freeBlockList.isEmpty()) {
+            System.out.println("There are no freeblocks in the memory pool");
+        }
+        else {
+            for (int i = 0; i < freeBlockList.size(); i++) {
+                Block block = freeBlockList.get(i);
+                System.out.print("(" + block.getPosition() + "," + block
+                    .getLength() + ")");
+                if (i != freeBlockList.size() - 1) {
+                    System.out.print(" -> ");
+                }
             }
+            System.out.println();
         }
     }
 }

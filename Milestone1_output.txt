@@ -10,6 +10,7 @@ Date: 0610071600, Length: 60, X: 20, Y: 10, Cost: 30
 Description: Introduction to bioinformatics and computation biology
 Keywords: Bioinformatics, computation_biology, Biology, Computer_Science, VT, Virginia_Tech
 Size: 242
+Memory pool expanded to 1024 bytes
 Hash table expanded to 8 records
 Successfully inserted record with ID 3
 ID: 3, Title: Computing Systems Research at VT
@@ -24,7 +25,11 @@ Date: 0703301125, Length: 35, X: 0, Y: 0, Cost: 25
 Description: Learn what kind of research is done on HPC and CSE at VT
 Keywords: HPC, CSE, computer_science
 Size: 164
-Search FAILED -- There is no record with ID 3
+Found record with ID 3:
+ID: 3, Title: Computing Systems Research at VT
+Date: 0701250830, Length: 30, X: 30, Y: 10, Cost: 17
+Description: Seminar about the Computing systems research at VT
+Keywords: high_performance_computing, grids, VT, computer, science
 Hashtable:
 1: 1
 2: 2
@@ -32,6 +37,7 @@ Hashtable:
 5: 10
 total records: 4
 Freeblock List:
+(761,263)
 Record with ID 2 successfully deleted from the database
 Search FAILED -- There is no record with ID 2
 Hashtable:
@@ -41,6 +47,7 @@ Hashtable:
 5: 10
 total records: 3
 Freeblock List:
+(173,242) -> (761,263)
 Delete FAILED -- There is no record with ID 6
 Successfully inserted record with ID 2
 ID: 2, Title: Much More Computational Biology and Bioinformatics in CS at Virginia Tech
@@ -56,3 +63,4 @@ Hashtable:
 5: TOMBSTONE
 total records: 3
 Freeblock List:
+(173,242) -> (597,164) -> (1021,3)

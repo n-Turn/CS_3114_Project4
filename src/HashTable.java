@@ -166,7 +166,7 @@ public class HashTable {
             }
             i++;
             // Quadratic probing to find the next available index
-            index = (HashTable.h(id, allRecords.length) + ((i * i) + i) / 2)
+            index = (HashTable.h(id, allRecords.length) + (((i * i) + i) / 2))
                 % allRecords.length;
 
             if (i == allRecords.length) {
@@ -191,6 +191,7 @@ public class HashTable {
             }
         }
         return allRecords.length < (2 * (entryCount + 1));
+        //return allRecords.length / 2 <= entryCount;
     }
 
 
@@ -210,7 +211,7 @@ public class HashTable {
                 while (doubledRecords[newIndex] != null) {
                     whileLoopCounter++;
                     newIndex = (HashTable.h(allRecords[i].getKey(),
-                        doubledLength) + (whileLoopCounter * whileLoopCounter))
+                        doubledLength) + (whileLoopCounter * whileLoopCounter + whileLoopCounter)/2)
                         % doubledLength;
 
                     if (whileLoopCounter == doubledLength) {
