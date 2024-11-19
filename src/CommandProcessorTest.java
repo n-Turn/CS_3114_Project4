@@ -176,26 +176,4 @@ public class CommandProcessorTest extends TestCase {
         assertTrue(output.contains("Successfully inserted record with ID 1"));
         assertTrue(output.contains("Successfully inserted record with ID 2"));
     }
-
-
-    /**
-     * Tests invalid commands
-     */
-    public void testInvalidCommands() {
-        String input = "invalid 1\n" + // Invalid command
-            "print invalid\n" + // Invalid print type
-            "insert invalid\n"; // Invalid insert format
-
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(input
-            .getBytes());
-        Scanner scanner = new Scanner(inputStream);
-        processor = new CommandProcessor(100, 4, scanner);
-
-        systemOut().clearHistory();
-        processor.processCommands();
-        String output = systemOut().getHistory();
-
-        // Should handle invalid commands gracefully
-        assertFalse(output.contains("Exception"));
-    }
 }

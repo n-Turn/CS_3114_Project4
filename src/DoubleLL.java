@@ -133,18 +133,6 @@ public class DoubleLL {
         size = 0;
     }
 
-// /**
-// * This method checks if the list contains a specific element.
-// *
-// * @param num
-// * the element to check for
-// * @return true if the element is found, false otherwise
-// */
-//
-// public boolean contains(int num) {
-// return lastIndexOf(num) != -1;
-// }
-
 
     /**
      * This method returns the data of the node at the specified index.
@@ -161,8 +149,8 @@ public class DoubleLL {
     /**
      * This method adds a new entry to the end of the list.
      *
-     * @param newEntry
-     *            the integer data to be added to the list
+     * @param newBlock
+     *            the block to be added to the list
      */
     public void add(Block newBlock) {
         add(size(), newBlock);
@@ -174,8 +162,8 @@ public class DoubleLL {
      *
      * @param index
      *            the position where the new element should be inserted
-     * @param num
-     *            the integer data to be added
+     * @param block
+     *            the block to be added
      */
     public void add(int index, Block block) {
         Node addition = new Node(block);
@@ -224,31 +212,6 @@ public class DoubleLL {
         return current;
     }
 
-// /**
-// *
-// * This method returns the last index of the specified element in the list.
-// *
-// *
-// *
-// * @param num
-// *
-// * the element to search for
-// *
-// * @return the last index of the element, or -1 if not found
-// *
-// */
-//
-// public int lastIndexOf(int num) {
-// Node current = tail;
-// for (int i = size() - 1; i >= 0; i--) {
-// if (current.getData() == num) {
-// return i;
-// }
-// current = current.previous();
-// }
-// return -1;
-// }
-
 
     /**
      * This method removes the node at the specified index.
@@ -286,26 +249,4 @@ public class DoubleLL {
         size--;
         return true;
     }
-
-
-//    /**
-//     * This method returns a string representation of the list in the format
-//     * 
-//     * @return a string representation of the list
-//     */
-//    @Override
-//    public String toString() {
-//        StringBuilder sb = new StringBuilder();
-//        Node current = head;
-//        sb.append("[");
-//        while (current != null) {
-//            sb.append(current.getBlock().toString());
-//            if (current.next() != null) {
-//                sb.append(", ");
-//            }
-//            current = current.next();
-//        }
-//        sb.append("]");
-//        return sb.toString();
-//    }
 }

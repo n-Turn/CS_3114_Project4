@@ -21,7 +21,6 @@ public class MemoryManager {
         initialMemSize = memSize;
         memoryPool = new byte[memSize];
         freeBlockList = new DoubleLL();
-        // Initially, the entire memory is free
         freeBlockList.add(new Block(0, memSize));
     }
 
@@ -31,32 +30,34 @@ public class MemoryManager {
      * 
      * @param serializedData
      *            is the serialized data we are inserting into the hash
-     * @param length
+     * @param size
      *            is the length of the serialized data
      * @return the handle that is inserted
      */
     public Handle insert(byte[] serializedData, int size) {
+        // goes through the freeblock list to get the index to insert at
         for (int listIndex = 0; listIndex < freeBlockList.size(); listIndex++) {
             Block currentFreeBlock = freeBlockList.get(listIndex);
+            // if there is space for the data add it
             if (currentFreeBlock.getLength() >= size) {
                 int position = currentFreeBlock.getPosition();
-                if (currentFreeBlock.getLength() == size) { // help me test both
-                                                            // branches here
+                // if the space is exact, then remove the freeblock
+                if (currentFreeBlock.getLength() == size) {
                     freeBlockList.remove(listIndex);
                 }
+                // otherwise edit the position and the length
                 else {
-// System.out.println(listIndex);
-// System.out.println(size);
                     currentFreeBlock.setPosition(currentFreeBlock.getPosition()
                         + size);
                     currentFreeBlock.setLength(currentFreeBlock.getLength()
                         - size);
                 }
+                // put the data in the memory pool
                 System.arraycopy(serializedData, 0, memoryPool, position, size);
                 return new Handle(position, size);
             }
         }
-        // If no suitable block found, expand memory and retry insertion
+        // if there is no space for it, expand the memory pool
         expand();
         System.out.println("Memory pool expanded to " + memoryPool.length
             + " bytes");
@@ -68,32 +69,23 @@ public class MemoryManager {
      * Expands the memory size if no spot found is big enough
      */
     private void expand() {
+        // create a larger memory pool and copy the old data to the new one
         byte[] largerMemoryPool = new byte[memoryPool.length + initialMemSize];
         System.arraycopy(memoryPool, 0, largerMemoryPool, 0, memoryPool.length);
 
-        // create a new block for the new memory pool space
+        // create a new block for the new memory space
         Block newBlock = new Block(memoryPool.length, initialMemSize);
 
+        // if the list is empty then just add it in
         if (freeBlockList.isEmpty()) {
-            // if the list is empty then just add it in
             freeBlockList.add(newBlock);
         }
+        // otherwise check if it can be merged with the last block
         else {
-            // check if it can be merged with the last block
             Block lastBlock = freeBlockList.get(freeBlockList.size() - 1);
-//            if (lastBlock.getPosition() + lastBlock.getLength() == newBlock
-//                .getPosition()) {
-                // merge new block and last block if needed
-                lastBlock.setLength(lastBlock.getLength() + newBlock
-                    .getLength());
-//            }
-//            else {
-//                // otherwise add as a new block to the end
-//                freeBlockList.add(newBlock);
-//            }
+            lastBlock.setLength(lastBlock.getLength() + newBlock.getLength());
         }
         memoryPool = largerMemoryPool;
-
     }
 
 
@@ -104,13 +96,13 @@ public class MemoryManager {
      *            is the handle that is removed
      */
     public void remove(Handle handle) {
-        // System.out.println(handle.toString());
+        //get the position
         int startPosition = handle.getPosition();
 
         // new block of free memory
         Block freedBlock = new Block(startPosition, handle.getLength());
 
-        // put the freed block into the freeBlockList in the correct position
+        // find the place to put the block
         int insertIndex;
         for (insertIndex = 0; insertIndex < freeBlockList
             .size(); insertIndex++) {
@@ -118,9 +110,10 @@ public class MemoryManager {
                 break;
             }
         }
+        // put the freed block into the freeBlockList in the spot
         freeBlockList.add(insertIndex, freedBlock);
 
-        // Check for possible merges with neighboring blocks
+        // Merge with neighboring blocks if necessary
         mergePrevAndNextBlocks(insertIndex);
     }
 
@@ -152,9 +145,7 @@ public class MemoryManager {
         }
 
         // if not the last block
-        if (index < freeBlockList.size() - 1) { // help me create test methods
-                                                // that will test both branhces
-                                                // here too
+        if (index < freeBlockList.size() - 1) {
             // merge with the next block if they are adjacent
             Block nextBlock = freeBlockList.get(index + 1);
             if (currentBlock.getPosition() + currentBlock
@@ -175,13 +166,12 @@ public class MemoryManager {
      *            The space a record takes up
      * @param handle
      *            The handle of that record
-     * @param length
+     * @param size
      *            The length of the record
      * @return the number of copied bytes is returned
      */
     public int get(byte[] space, Handle handle, int size) {
         System.arraycopy(memoryPool, handle.getPosition(), space, 0, size);
-        // TODO what to return, ask a TA
         return size;
     }
 
@@ -190,6 +180,7 @@ public class MemoryManager {
      * Dumps a printout of the freeblock list
      */
     public void dump() {
+        System.out.println("Freeblock List:");
         if (freeBlockList.isEmpty()) {
             System.out.println("There are no freeblocks in the memory pool");
         }

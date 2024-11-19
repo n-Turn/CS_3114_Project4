@@ -1,7 +1,13 @@
-import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import student.TestCase;
-import org.junit.Test;
 
+/**
+ * This class tests the Memory Manager class
+ * 
+ * @author Nimay Goradia (ngoradia) and Nicolas Turner (nicturn)
+ * @version 11.13/2024
+ */
 public class MemoryManagerTest extends TestCase {
 
     private MemoryManager memManager;
@@ -62,8 +68,7 @@ public class MemoryManagerTest extends TestCase {
         // This will force expansion and test merge branch
         byte[] data2 = new byte[50];
         Handle h2 = memManager.insert(data2, 50);
-        assertEquals(100, h2.getPosition()); // Should be placed at end of
-                                             // original pool
+        assertEquals(100, h2.getPosition());
     }
 
 
@@ -97,13 +102,6 @@ public class MemoryManagerTest extends TestCase {
         System.out.println("h1: " + h1.getPosition());
         System.out.println("h3: " + h3.getPosition());
         System.out.println("h4: " + h4.getPosition());
-
-        // There should be two separate free blocks:
-        // 1. The gap in the middle (40 bytes)
-        // 2. The remaining space after expansion
-//        assertTrue(output.contains(" -> ")); // Multiple free blocks exist
-//        assertEquals(100, h4.getPosition()); // New data should start at
-                                             // position 100
     }
 
 
@@ -134,7 +132,7 @@ public class MemoryManagerTest extends TestCase {
         systemOut().clearHistory();
         memManager.dump();
         String output = systemOut().getHistory();
-        assertTrue(output.contains("(0,60)")); // All blocks merged
+        assertTrue(output.contains("(0,60)"));
     }
 
 
@@ -174,6 +172,148 @@ public class MemoryManagerTest extends TestCase {
         for (int i = 0; i < 5; i++) {
             assertEquals(originalData[i], retrievedData[i]);
         }
+    }
+
+
+    /**
+     * Tests the insert and remove with merge
+     */
+    public void testInsertAndRemoveWithMerge() {
+        MemoryManager manager = new MemoryManager(100);
+
+        // Insert 3 blocks of data
+        Handle handle1 = manager.insert(new byte[20], 20);
+        Handle handle2 = manager.insert(new byte[30], 30);
+        Handle handle3 = manager.insert(new byte[10], 10);
+
+        // Remove middle block and check free block list
+        manager.remove(handle2);
+
+        // Remove adjacent blocks to cause merge
+        manager.remove(handle1);
+        manager.remove(handle3);
+
+        // Verify the entire memory is a single block again
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        manager.dump();
+
+        String expectedOutput = "Freeblock List:\n(0,100)\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
+    /**
+     * Tests edge cases with merge
+     */
+    public void testExactFitAndPartialAllocation() {
+        MemoryManager manager = new MemoryManager(100);
+
+        // Insert data with exact fit
+        Handle handle1 = manager.insert(new byte[50], 50);
+
+        // Insert smaller data to create remaining block
+        Handle handle2 = manager.insert(new byte[30], 30);
+
+        // Verify free block size
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        manager.dump();
+
+        String expectedOutput = "Freeblock List:\n(80,20)\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
+    /**
+     * tests merging previous and next blocks
+     */
+    public void testMergePrevAndNextBlocks() {
+        MemoryManager manager = new MemoryManager(100);
+
+        // Insert 3 blocks of data
+        Handle handle1 = manager.insert(new byte[20], 20);
+        Handle handle2 = manager.insert(new byte[30], 30);
+        Handle handle3 = manager.insert(new byte[40], 40);
+
+        // Remove first and last blocks
+        manager.remove(handle1);
+        manager.remove(handle3);
+
+        // Remove middle block to trigger merge with both neighbors
+        manager.remove(handle2);
+
+        // Verify memory is back to a single block
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        manager.dump();
+
+        String expectedOutput = "Freeblock List:\n(0,100)\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
+    /**
+     * Tests expanding the memory
+     */
+    public void testExpandMemory() {
+        MemoryManager manager = new MemoryManager(50);
+
+        // Fill initial memory
+        Handle handle1 = manager.insert(new byte[50], 50);
+
+        // Trigger memory expansion
+        Handle handle2 = manager.insert(new byte[30], 30);
+
+        // Verify free block after expansion
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        manager.dump();
+
+        String expectedOutput = "Freeblock List:\n(80,20)\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+
+    /**
+     * Tests the get method again for edge cases
+     */
+    public void testGet2() {
+        MemoryManager manager = new MemoryManager(50);
+
+        // Insert data and retrieve it
+        byte[] data = "TestData".getBytes();
+        Handle handle = manager.insert(data, data.length);
+
+        byte[] retrievedData = new byte[data.length];
+        int bytesCopied = manager.get(retrievedData, handle, data.length);
+
+        // Verify the retrieved data matches the inserted data
+        assertEquals(data.length, bytesCopied);
+    }
+
+
+    /**
+     * Tests dumping the free block again for edge cases
+     */
+    public void testDumpEmptyFreeBlockList() {
+        MemoryManager manager = new MemoryManager(50);
+
+        // Allocate entire memory
+        manager.insert(new byte[50], 50);
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        manager.dump();
+
+        String expectedOutput =
+            "Freeblock List:\nThere are no freeblocks in the memory pool\n";
+        assertEquals(expectedOutput, outContent.toString());
     }
 
 }

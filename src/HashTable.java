@@ -74,15 +74,14 @@ public class HashTable {
     private Handle tombstoneHandle = null;
     private final Record tombstone = new Record(-1, tombstoneHandle);
 
-//    /**
-//     * This is mostly just for testing
-//     * 
-//     * @return the tombstone
-//     */
-//    public Record getTombstone() {
-//        return tombstone;
-//    }
-
+// /**
+// * This is mostly just for testing
+// *
+// * @return the tombstone
+// */
+// public Record getTombstone() {
+// return tombstone;
+// }
 
     /**
      * Constructor for the Hash class, which initializes the hash table with a
@@ -117,6 +116,7 @@ public class HashTable {
         return allRecords;
     }
 
+
     /**
      * Getter method for the number of records in the hash
      *
@@ -125,7 +125,7 @@ public class HashTable {
     public int getNumberOfRecords() {
         return numberOfRecords;
     }
-        
+
 
     /**
      * Compute the hash function
@@ -187,7 +187,7 @@ public class HashTable {
             }
         }
         return allRecords.length < (2 * (entryCount + 1));
-        //return allRecords.length / 2 <= entryCount;
+        // return allRecords.length / 2 <= entryCount;
     }
 
 
@@ -207,8 +207,8 @@ public class HashTable {
                 while (doubledRecords[newIndex] != null) {
                     whileLoopCounter++;
                     newIndex = (HashTable.h(allRecords[i].getKey(),
-                        doubledLength) + (whileLoopCounter * whileLoopCounter + whileLoopCounter)/2)
-                        % doubledLength;
+                        doubledLength) + (whileLoopCounter * whileLoopCounter
+                            + whileLoopCounter) / 2) % doubledLength;
 
                 }
                 doubledRecords[newIndex] = allRecords[i];
