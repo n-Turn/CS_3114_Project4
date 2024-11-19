@@ -28,7 +28,6 @@ public class CommandProcessor {
         this.memManager = new MemoryManager(memSize);
         this.hashTable = new HashTable(hashSize);
         this.scanner = scanner;
-// this.writer = writer;
     }
 
 
@@ -75,7 +74,6 @@ public class CommandProcessor {
         }
         cmdScanner.close();
     }
-
 
     /**
      * Processes an insert command
@@ -236,8 +234,6 @@ public class CommandProcessor {
 
         if (type.equals("hashtable")) {
             hashTable.print();
-// writer.println("Hashtable:");
-// hashTable.print(writer);
         }
         else if (type.equals("blocks")) {
             System.out.println("Freeblock List:");

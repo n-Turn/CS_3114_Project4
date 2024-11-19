@@ -74,6 +74,16 @@ public class HashTable {
     private Handle tombstoneHandle = null;
     private final Record tombstone = new Record(-1, tombstoneHandle);
 
+//    /**
+//     * This is mostly just for testing
+//     * 
+//     * @return the tombstone
+//     */
+//    public Record getTombstone() {
+//        return tombstone;
+//    }
+
+
     /**
      * Constructor for the Hash class, which initializes the hash table with a
      * specified size.
@@ -107,17 +117,6 @@ public class HashTable {
         return allRecords;
     }
 
-
-    /**
-     * Getter method for the tombstone
-     *
-     * @return the tombstone record
-     */
-    public Record getTombstone() {
-        return tombstone;
-    }
-
-
     /**
      * Getter method for the number of records in the hash
      *
@@ -126,7 +125,7 @@ public class HashTable {
     public int getNumberOfRecords() {
         return numberOfRecords;
     }
-
+        
 
     /**
      * Compute the hash function
@@ -169,9 +168,6 @@ public class HashTable {
             index = (HashTable.h(id, allRecords.length) + (((i * i) + i) / 2))
                 % allRecords.length;
 
-//            if (i == allRecords.length) {
-//                return; // Prevent infinite loop if table is full
-//            }
         }
         allRecords[index] = new Record(id, handle);
         numberOfRecords++;
@@ -214,9 +210,6 @@ public class HashTable {
                         doubledLength) + (whileLoopCounter * whileLoopCounter + whileLoopCounter)/2)
                         % doubledLength;
 
-//                    if (whileLoopCounter == doubledLength) {
-//                        return; // Prevent infinite loop if table is full
-//                    }
                 }
                 doubledRecords[newIndex] = allRecords[i];
             }
@@ -247,29 +240,6 @@ public class HashTable {
         }
         return false;
     }
-
-
-// /**
-// * Finds the index of a specified record
-// *
-// * @param rec
-// * the record to be found
-// * @return the index of the specified record, or -1 if not found
-// */
-// public int find(Record rec) {
-// int index = HashTable.h(rec.getKey(), allRecords.length);
-// int i = 0;
-// while (allRecords[index] != null && (i < allRecords.length)) {
-// if (allRecords[index] != tombstone && allRecords[index].key == (rec
-// .getKey())) {
-// return index;
-// }
-// i++;
-// index = (HashTable.h(rec.getKey(), allRecords.length) + (i * i))
-// % allRecords.length;
-// }F
-// return -1; // Record not found
-// }
 
 
     /**

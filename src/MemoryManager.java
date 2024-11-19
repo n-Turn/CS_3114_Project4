@@ -40,7 +40,8 @@ public class MemoryManager {
             Block currentFreeBlock = freeBlockList.get(listIndex);
             if (currentFreeBlock.getLength() >= size) {
                 int position = currentFreeBlock.getPosition();
-                if (currentFreeBlock.getLength() == size) {
+                if (currentFreeBlock.getLength() == size) { // help me test both
+                                                            // branches here
                     freeBlockList.remove(listIndex);
                 }
                 else {
@@ -73,16 +74,23 @@ public class MemoryManager {
         // create a new block for the new memory pool space
         Block newBlock = new Block(memoryPool.length, initialMemSize);
 
-        // check if it can be merged with the last block
-        Block lastBlock = freeBlockList.get(freeBlockList.size() - 1);
-        if (lastBlock.getPosition() + lastBlock.getLength() == newBlock
-            .getPosition()) {
-            // merge new block and last block if needed
-            lastBlock.setLength(lastBlock.getLength() + newBlock.getLength());
+        if (freeBlockList.isEmpty()) {
+            // if the list is empty then just add it in
+            freeBlockList.add(newBlock);
         }
         else {
-            // otherwise add as a new block to the end
-            freeBlockList.add(newBlock);
+            // check if it can be merged with the last block
+            Block lastBlock = freeBlockList.get(freeBlockList.size() - 1);
+            if (lastBlock.getPosition() + lastBlock.getLength() == newBlock
+                .getPosition()) {
+                // merge new block and last block if needed
+                lastBlock.setLength(lastBlock.getLength() + newBlock
+                    .getLength());
+            }
+            else {
+                // otherwise add as a new block to the end
+                freeBlockList.add(newBlock);
+            }
         }
         memoryPool = largerMemoryPool;
 
@@ -144,7 +152,9 @@ public class MemoryManager {
         }
 
         // if not the last block
-        if (index < freeBlockList.size() - 1) {
+        if (index < freeBlockList.size() - 1) { // help me create test methods
+                                                // that will test both branhces
+                                                // here too
             // merge with the next block if they are adjacent
             Block nextBlock = freeBlockList.get(index + 1);
             if (currentBlock.getPosition() + currentBlock
