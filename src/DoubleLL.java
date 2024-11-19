@@ -123,28 +123,22 @@ public class DoubleLL {
     }
 
 
-//    /**
-//     * This method clears the list by setting head and tail to null and
-//     * resetting the size.
-//     */
-//    public void clear() {
-//        head = null;
-//        tail = null;
-//        size = 0;
-//    }
+    /**
+     * This method clears the list by setting head and tail to null and
+     * resetting the size.
+     */
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
 
 // /**
-// *
 // * This method checks if the list contains a specific element.
 // *
-// *
-// *
 // * @param num
-// *
 // * the element to check for
-// *
 // * @return true if the element is found, false otherwise
-// *
 // */
 //
 // public boolean contains(int num) {
