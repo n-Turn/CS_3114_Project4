@@ -4,7 +4,7 @@ import java.nio.file.Paths;
 import student.TestCase;
 
 /**
- * hi
+ * Tests the methods functionality of the whole project
  * 
  * @author Nicolas Turner & Nimay Goradia
  * @version 11/11/24
