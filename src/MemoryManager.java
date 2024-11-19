@@ -81,16 +81,16 @@ public class MemoryManager {
         else {
             // check if it can be merged with the last block
             Block lastBlock = freeBlockList.get(freeBlockList.size() - 1);
-            if (lastBlock.getPosition() + lastBlock.getLength() == newBlock
-                .getPosition()) {
+//            if (lastBlock.getPosition() + lastBlock.getLength() == newBlock
+//                .getPosition()) {
                 // merge new block and last block if needed
                 lastBlock.setLength(lastBlock.getLength() + newBlock
                     .getLength());
-            }
-            else {
-                // otherwise add as a new block to the end
-                freeBlockList.add(newBlock);
-            }
+//            }
+//            else {
+//                // otherwise add as a new block to the end
+//                freeBlockList.add(newBlock);
+//            }
         }
         memoryPool = largerMemoryPool;
 
